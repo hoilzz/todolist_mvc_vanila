@@ -9,7 +9,7 @@
         this.defaultTemplate = 
             '<li data-id="{{id}}" class="{{completed}}">' +
                 '<div class="view">' +
-                    '<input class="toggle" type="checkbox" {{checked}}' +
+                    '<input class="toggle" type="checkbox" {{checked}}>' +
                     '<label>{{title}}</label>' +
                     '<button class="destroy"></button>' +
                 '</div>' +
@@ -28,7 +28,7 @@
             // data[i].complelted의 기본 값은 false다.
             if(data[i].completed){
                 completed = 'completed';
-                checked = 'checked';
+                checked = 'che3cked';
             }
 
             template = template.replace('{{id}}', data[i].id);

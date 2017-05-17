@@ -22,7 +22,6 @@
         Controller.prototype의 메서드들은 모두 model에 data조작을 위임하는 메서드들이다.
         또한, callback 구조를 통해 변경된 data에 대한 정보를 view에게 전달하여 렌더링하도록 한다.
     */
-    
 
     Controller.prototype.showAll = function(){
         console.log('Controller.showAll method execute!');
@@ -33,7 +32,6 @@
             self.view.render('showEntries', data);
         })
     }
-
 
     // model에게 data 변경(추가 or 수정)을 요청하고, callback으로 넘어온 값을 view에게 전달
     Controller.prototype.addItem = function(title){

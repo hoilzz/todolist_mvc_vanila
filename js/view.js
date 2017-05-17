@@ -46,7 +46,7 @@
             // 파라미터의 data : storage에 있는 모든 data. 모든 데이터를 출력하는 메서드
             showEntries: function(){
                 console.log('View.render.showentries execute!');
-                self._addItem(parameter);
+                self._addItem(data);
             },
             // 입력을 마치고 나면 input tag 안을 비워주는 역할을 하는 메서드
             clearNewTodo: function(){
@@ -59,6 +59,7 @@
 
     // 프린팅 작업
     // innerHTML 메서드를 이용하여 template.js를 통해 data가 삽입된 html 조각 삽입
+    // id는 data 배열 
     View.prototype._addItem = function(id){
         this.$todoList.innerHTML = this.template.insert(id);
     }

@@ -21,6 +21,7 @@
 
     Storage.prototype.findAll = function(callback){
         console.log("Storage.findAll method execute!");
+        // 찾고나서 함수 실행
         callback = callback || function(){};
         callback.call(this, JSON.parse(localStorage[this._dbName]).todos);
     }
