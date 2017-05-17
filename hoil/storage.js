@@ -15,6 +15,7 @@
     Storage.prototype.findAll = function(callback){
         // callback은 렌더 함수.
         callback = callback || function(){};
+        // callback.call(this, JSON.parse(localStorage[this._dbName]).todos);
         callback(JSON.parse(localStorage[this._dbName]).todos);
     }
 

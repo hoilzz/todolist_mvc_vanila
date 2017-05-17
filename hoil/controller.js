@@ -14,6 +14,7 @@
         var self = this;
         this.model.read(function(data){
             this.view.render('showLists', data);
+            // self.view.render('showLists', data);
         })
         // 데이터 읽어와서 from Model from Storage
         // 렌더
