@@ -3,7 +3,7 @@
     function Template(){
         console.log("Template Constructor executed");
 
-        var defaultTemplate = '<li data-id="{{id}}" class="{{completed}}">' +
+        this.defaultTemplate = '<li data-id="{{id}}" class="{{completed}} todo-item">' +
                 '<div class="view">' +
                     '<input class="toggle" type="checkbox" {{checked}}>' +
                     '<label>{{title}}</label>' +
@@ -12,7 +12,7 @@
             '</li>';
     }
 
-    Template.prototype.template = function(data){
+    Template.prototype.makeList = function(data){
         var lists = '';
         
         for(var i=0; i<data.length; i++){
@@ -30,11 +30,10 @@
             template = template.replace('{{checked}}', checked);
             template = template.replace('{{title}}', data[i].title);
 
-            list = list + template;
+            lists = lists + template;
         }
-        return list;
+        return lists;
     };
-
     exports.app = exports.app || {};
     exports.app.Template = Template;
 })(this);
