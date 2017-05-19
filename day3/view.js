@@ -54,7 +54,7 @@
                 self._removeItemListTag(data);
             },
             toggleTodo: function(){
-                self._toggleItem(data);
+                self._toggleItem(data.id, data.completed);
             }
         }
         viewCommands[viewCmd]();
@@ -86,15 +86,16 @@
         return targetElement.dataset.id;
     }
 
-    View.prototype._toggleItem = function(data){
-        var todoElement = this._getElementById(data.id);
+    View.prototype._toggleItem = function(id, completed){
+        var todoElement = this._getElementById(id);
         var checkBox    = todoElement.querySelector('.toggle');
-        if(data.completed === true){
+
+        checkBox.checked = completed;
+
+        if(completed === true){
             todoElement.classList.add('completed');
-            checkBox.checked = data.completed;
         } else {
             todoElement.classList.remove('completed');
-            checkBox.checked = data.completed;
         }
     }
 

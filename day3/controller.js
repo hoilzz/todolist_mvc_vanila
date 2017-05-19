@@ -19,7 +19,7 @@
         });
 
         this.view.bind('toggleTodo', function(data){
-            self.toggleItem(data);
+            self.toggleItem(data.id, data.completed);
         })
 
         this.showAll();
@@ -53,12 +53,9 @@
         });
     }
 
-    Controller.prototype.toggleItem = function(data){
-        // model에서 해당 id에 대한 toggle 요청
-        // storage에서 요청에 대한 처리
-        //   - callback, view에서 completed 클래스 추가
+    Controller.prototype.toggleItem = function(id, completed){
         var self = this;
-        this.model.update(data, function(data){
+        this.model.update({id: id, completed:completed}, function(data){
             self.view.render('toggleTodo', data);
         });
     }

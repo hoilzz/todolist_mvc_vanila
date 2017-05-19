@@ -33,15 +33,14 @@
             if(itemIndex === false){
                 alert("not found item");
             }else {
-                // itemData에 들어있는 것만큼 업데이트..
                 for(var key in itemData){
                     if(key == 'id') continue;
                     todos[itemIndex][key] = itemData[key];
                 }
                 localStorage[this._dbName] = JSON.stringify(data);
             }
+            // callback.call(this,itemData);
             callback(itemData);
-            // 저장
         } else{
             itemData.id = new Date().getTime();
             todos.push(itemData);
