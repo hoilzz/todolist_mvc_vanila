@@ -7,8 +7,6 @@
         // ul tag
         this.todoTag = document.getElementById('todo-list');
         this.todoInputTag = document.getElementById('new-todo');
-        this.removeBtnTags = document.getElementsByClassName('destroy');
-        console.log("removeBtnTag len " + this.removeBtnTags.length);
     }
 
     View.prototype.bind = function(event, handler){
@@ -20,12 +18,24 @@
             });
         }
         else if(event === 'removeTodo'){
-            self._addEventListenerList(self.removeBtnTags, 'click', function(){
-                // console.log("you clicked X button");
-                // var target = event.target;
-                // target.closest(...)
-                handler(this.closest('.todo-item').getAttribute('data-id'));
+            self.todoTag.addEventListener('click', function(event){
+                var target = event.target;
+                
+                if(target.getAttribute('class') === 'destroy'){
+                    var id = self._getItemId(target, 'todo-item') || '';
+                    handler(id);
+                } 
             });
+        }
+        else if(event === 'toggleTodo'){
+            self.todoTag.addEventListener('click', function(event){
+                var target = event.target;    
+                if(target.getAttribute('class') === 'toggle'){
+                    var id = self._getItemId(target, 'todo-item') || '';
+                    var checked = target.checked;
+                    handler({id:id, completed: checked});
+                }
+            })
         }
     }
 
@@ -42,6 +52,9 @@
             removeTodo: function(){
                 // 여기서 data는 id
                 self._removeItemListTag(data);
+            },
+            toggleTodo: function(){
+                self._toggleItem(data);
             }
         }
         viewCommands[viewCmd]();
@@ -56,17 +69,35 @@
         for (var i = 0; i < lists.length; i++) {
             console.log(i, " : ",lists[i]);
             lists[i].addEventListener(event, fn, false);
+        }
     }
 
     View.prototype._removeItemListTag = function(id){
-        this._findElementById(id).remove();
+        this._getElementById(id).remove();
     }
 
-    View.prototype._findElementById = function(id){
+    View.prototype._getElementById = function(id){
         return document.querySelector("li[data-id='" + id + "']");
     }
-}
-    
+
+    View.prototype._getItemId = function(element, className){
+        //this.closest('.todo-item').getAttribute('data-id')
+        var targetElement = element.closest('.' + className);
+        return targetElement.dataset.id;
+    }
+
+    View.prototype._toggleItem = function(data){
+        var todoElement = this._getElementById(data.id);
+        var checkBox    = todoElement.querySelector('.toggle');
+        if(data.completed === true){
+            todoElement.classList.add('completed');
+            checkBox.checked = data.completed;
+        } else {
+            todoElement.classList.remove('completed');
+            checkBox.checked = data.completed;
+        }
+    }
+
     exports.app = exports.app || {};
     exports.app.View = View;
 })(this);
