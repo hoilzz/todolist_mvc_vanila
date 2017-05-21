@@ -16,7 +16,6 @@
         // callback은 렌더 함수.
         callback = callback || function(){};
         callback(JSON.parse(localStorage[this._dbName]).todos);
-        // callback.call(this, JSON.parse(localStorage[this._dbName]).todos);
     }
 
     Storage.prototype.save = function(itemData, callback){
