@@ -19,7 +19,6 @@
         this.view.bind('toggleTodo', function(data){
             self.toggleItem(data.id, data.completed);
         });
-        // this.view.bind('readyToModify');
         
         // 새로운 input.edit 엘리먼트에 대해 다음과 같이 이벤트 추가하면 
         // 더블 클릭할 때마다 이벤트 생성된다.

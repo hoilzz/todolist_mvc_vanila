@@ -1,50 +1,45 @@
-# day3
+# day4
 
-item 상태 수정하기
+item 내용 수정하기
 
-1. to do 체크하면
-  - 이벤트 바인딩 
-  
-  Model
-  - id값을 기준으로 해당 레코드 상태값 completed로 변경 
-  View
-  - 취소선
-  - checked
+todo를 `더블클릭`하면 텍스트를 수정할 수 있다.
+엔터를 누르거나, `focus out(blur)`되면 가장 마지막에 입력한 텍스트로 수정된다. 
 
-2. db에서 showAll() 호출
-  - 상태 구분해서 체크,취소선 상태로 dp
+위 2가지 event에 대한 바인딩.
 
+- 텍스트 수정하기
 
-### 2.1 to do list 모두 보여주기
+1. todo item `dbclick` -> handler
+2. handler는 View 메서드를 통해 해당 item의 값을 가진 input 태그를 생성한다.
 
-```
-Model.read 
-|-- Controller.showAll 
-  |-- Model.read(callback===view.render)
-    |-- Storage.findAll, call(view.render)
-```
+- 수정된 텍스트 반영하기
+
+1. `keypress=enter` or `blur` -> handler
+2. 해당 엘리먼트에서 `id`와 수정된 `value`를 controller에 전달.
+3. controller에서 model.update(id,value) -> Storage.update(id, value)
+4. 로컬스토리지에 반영 후, View에서 2가지를 수행한다.
+  - 수정 입력을 위해 생성된 input 제거
+  - todo item의 텍스트 값을 수정된 value로 변경
 
 
-
-2. 파라미터로 넘겨 받은 data를 템플릿에 삽입하는 메서드 구현
-
-
-### 2.2
-
-1. template로부터 잔달받는 view를 추가시킬 ul과 input을 캐싱
-2. bind 메서드 생성
-
-발생하는 event에 따라 다른 함수를 실행시키게 된다. 
-bind의 역할은 `이벤트를 추가하고`, `그 이벤트 핸들러를 실행시키는 역할`을 하게 된다.
-Controller로부터 넘겨온 정보를 받고 그대로 수행만 하는 것이다.
-Controller에서는 view에게 역할을 전달하기만 하고, 실질적인 이벤트 수행은 view에서 한다.
-하지만 view에서의 이벤트 수행은 데이터를 다루는 수행이 아닌, 해당하는 값을 인자로 넘겨준다.
-그럼 Controller에서는 넘겨받은 값을 Model 에게 전달하여 직접적인 데이터와의 연산을 위임.
-
-
-
-##
 
 ## 회고
 
-1. 콜백 헬
+1. Node와 Element 차이
+2. 문자열은 Element가 아니다.
+
+```javascript
+var strElement = "<div></div>";
+var element    = document.createElement('div');
+
+element instanceof Element // true
+strElement instanceof Element // false
+```
+
+당연한 거 같지만 막상 엘리먼트가 필요한 함수에 파라미터로 전달 할 때 헷갈렸다..
+`document.createElement()`는 Element 객체를 반환한다.
+
+3. event
+
+키보드 입력에 대한 이벤트는 `keypress`다. keyCode로 특정 입력을 찾을 수 있다.
+`blur`, `focusout`은 말 그대로 input과 같은 입력 박스에 대한 focus를 잃었을 때 발생한다. 
