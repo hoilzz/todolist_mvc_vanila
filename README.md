@@ -44,6 +44,6 @@ http-server -a 0.0.0.0 -p 3000
 
 ## day5
 
-완료된 todo 삭제하기
+[완료된 todo 삭제하기](https://github.com/seaunseen/todolist_mvc_vanila/tree/master/day5)
 
 
