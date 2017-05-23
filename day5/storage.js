@@ -13,9 +13,32 @@
     }
 
     Storage.prototype.findAll = function(callback){
-        callback = callback || function(){};
-        callback(JSON.parse(localStorage[this._dbName]).todos);
+        // callback이 없으면 찾은 데이터 return
+        if (callback === undefined){
+            return JSON.parse(localStorage[this._dbName]).todos;
+        } 
+        // callback이 있으면 데이터를 콜백 파라미터로 전달.
+        else{
+            callback(JSON.parse(localStorage[this._dbName]).todos);
+        }
     }
+
+    Storage.prototype.find = function(query, callback){
+        if(!callback){
+            return ;
+        }
+        var todos = JSON.parse(localStorage[this._dbName]).todos;
+        // filter 기준에 맞는 얘만 callback 실행.
+        callback.call(this, todos.filter(function(todo){
+            for(var q in query){
+                if(query[q] !== todo[q]){
+                    return false;
+                }
+            }
+            return true;
+        }));
+    };
+
 
     Storage.prototype.save = function(itemData, callback){
 

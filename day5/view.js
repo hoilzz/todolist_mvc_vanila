@@ -7,6 +7,8 @@
         this.todoTag = document.getElementById('todo-list');
         this.todoInputTag = document.getElementById('new-todo');
         this.editInputTag;
+        this.todoCountTag = document.getElementById('todo-count');
+        this.clearItemTag = document.querySelector('button.clear-completed');
     }
 
     View.prototype.bind = function(event, handler){
@@ -54,20 +56,16 @@
             });
         }
         else if(event === 'blurModify'){
-
             var makeOriginDisplay = function(event){
                 var target = event.target;
                 if(target.getAttribute('class') === 'edit'){
                     var title = target.value || '';
                     var id = self._getItemId(target, 'todo-item') || '';
                     // 자기자신을 삭제해야함.
-                    
                     self.editInputTag.removeEventListener('blur', makeOriginDisplay);
-
                     handler({id:id, title: title});
                 }
             }
-
             self.editInputTag.addEventListener('blur', makeOriginDisplay);
         }
         else if(event === 'focusOutModify'){
@@ -86,6 +84,12 @@
                 if(event.keyCode == 13){
                     target.blur();
                 }
+            })
+        }
+        else if(event === 'removeCompletedItem'){
+            self.clearItemTag.addEventListener('click', function(){
+                console.log("removeCompletedItem");
+                handler();
             })
         }
     }
@@ -109,6 +113,12 @@
             },
             completeToUpdate: function(){
                 self._updateItem(data.id, data.title);
+            },
+            writeActiveCount: function(){
+                self.todoCountTag.innerHTML = self.template.makeCounter(data.active);
+            },
+            showClearBtn: function(){
+                self._displayClearBtn(data.completed);
             }
         }
         viewCommands[viewCmd]();
@@ -159,6 +169,14 @@
         todoElement.classList.remove('editing');
         todoElement.querySelector('input.edit').remove();
         todoElement.querySelector('label.title').innerHTML = title;
+    }
+
+    View.prototype._displayClearBtn = function(completedCount){
+        if(completedCount > 0){
+            this.clearItemTag.style.display = 'block';
+        } else{
+            this.clearItemTag.style.display = 'none';
+        }
     }
 
     exports.app = exports.app || {};
