@@ -2,13 +2,11 @@
     'use strict';
     function Model(storage){
         console.log("Model Constructor executed");
-        
         this.storage = storage || {};
     }
 
-   
-
     Model.prototype.read = function(query, callback){
+        query = query || callback;
         var queryType = typeof query;
         callback = callback || function(){};
         // query가 함수타입이면 그대로 findAll 이용 후, callback 실행.
